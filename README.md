@@ -23,10 +23,10 @@ return: 网络字节   params: 主机字节
 return: 主机字节   params: 网络字节
 
 #### int inet_aton(const char *string, struct in_addr* addr)    
-#网络地址转换:127.232.124.79(char* | str) -> 0x4f7ce87f(int)
+网络地址转换:127.232.124.79(char* | str) -> 0x4f7ce87f(int)
 return: 1 | 0    params: 1、字符串 2、结构体in_addr，内部是32位的IPv4地址 -> in_addr_t(POSIX标准下的uint32_t)
 #### char* inet_ntoa(struct in_addr adr)
-#网络字节序整数型IP地址 -> str
+网络字节序整数型IP地址 -> str
 return: 指向字符串的指针    params: 32位的IPv4地址
 
 
