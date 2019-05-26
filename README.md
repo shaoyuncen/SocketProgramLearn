@@ -16,10 +16,10 @@ return: fd | -1    params: 1、fd 2、保存客户端地址信息的结构体（
 return: 0 | -1    params: 1、fd 2、保存服务器地址信息的结构体（地址族和地址信息） 3、地址长度
 
 #### unsigned short/long htons/htonl(unsigned short/long)   
-#字节序转换 host to network  #include <arpa/inet.h>
+字节序转换 host to network  #include <arpa/inet.h>
 return: 网络字节   params: 主机字节
 #### unsigned short/long ntohs/ntohl(unsigned short/long)   
-#字节序转换 network to host  #include <arpa/inet.h>
+字节序转换 network to host  #include <arpa/inet.h>
 return: 主机字节   params: 网络字节
 
 #### int inet_aton(const char *string, struct in_addr* addr)    
