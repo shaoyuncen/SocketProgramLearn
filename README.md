@@ -5,7 +5,7 @@
 ## 接口大全
 
 #### int socket(int domain, int type, int protocol)    
-return: fd | -1    default params: 1、PF_INET | PF_INET6 | etc. 2、SOCK_STREAM (tcp) | SOCK_DGRAM (udp)  3、IPPROTO_TCP | IPPROTO_UDP
+return: fd | -1    params: 1、PF_INET | PF_INET6 | etc. 2、SOCK_STREAM (tcp) | SOCK_DGRAM (udp)  3、IPPROTO_TCP | IPPROTO_UDP
 #### int bind(int sockfd, struct sockaddr *myaddr, socklen_t addrlen)    
 return: 1 | 0    params: 1、fd  2、结构体（地址族和地址信息） 3、地址长度
 #### int listen(int sockfd, int backlog)    
