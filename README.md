@@ -4,7 +4,7 @@
 # 1、阅读《TCP网络编程》
 ## 接口大全
 
-#TCP:  
+###TCP:  
 #### int socket(int domain, int type, int protocol)    
     return: fd | -1    
     params: ①PF_INET | PF_INET6 | etc. ②SOCK_STREAM (tcp) | SOCK_DGRAM (udp)  ③IPPROTO_TCP | IPPROTO_UDP
@@ -39,7 +39,7 @@
     return: 指向字符串的指针    
     params: 32位的IPv4地址
 
-#UDP:  
+###UDP:  
 #### ssize_t sendto(int sock, void* buff, size_t nbytes, int flags, struct sockaddr* to, socklen_t addrlen)  
     #UDP发送端函数  
     return: 成功时返回传输的字节数 | -1    
@@ -48,7 +48,7 @@
     #UDP接收端函数  
     return: 成功时返回传输的字节数 | -1    
     params: ①UDP套接字fd ②保存待传输数据的缓冲地址值 ③待传输数据长度 ④可选项参数，没有则为0 ⑤源地址 ⑥源地址长度     
-### UDP补充说明： UDP也可以使用connect来向套接字注册目标IP和端口号，然后使用sendto/recvfrom/read/write函数来传递数据。这并不意味着要与对方的UDP套接字连接，仅仅是注册了IP和port。  
+#### UDP补充说明： UDP也可以使用connect来向套接字注册目标IP和端口号，然后使用sendto/recvfrom/read/write函数来传递数据。这并不意味着要与对方的UDP套接字连接，仅仅是注册了IP和port。  
 
 #### int shutdown(int sock, int howto)  
     #优雅断开连接 -> 半关闭
