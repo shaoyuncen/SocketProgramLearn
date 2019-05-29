@@ -4,6 +4,7 @@
 # 1、阅读《TCP网络编程》
 ## 接口大全
 
+####TCP:  
 #### int socket(int domain, int type, int protocol)    
 return: fd | -1    params: 1、PF_INET | PF_INET6 | etc. 2、SOCK_STREAM (tcp) | SOCK_DGRAM (udp)  3、IPPROTO_TCP | IPPROTO_UDP
 #### int bind(int sockfd, struct sockaddr *myaddr, socklen_t addrlen)    
@@ -29,5 +30,12 @@ return: 1 | 0    params: 1、字符串 2、结构体in_addr，内部是32位的I
 网络字节序整数型IPv4地址(struct in_addr) -> str  
 return: 指向字符串的指针    params: 32位的IPv4地址
 
+####UDP:  
+#### ssize_t sendto(int sock, void* buff, size_t nbytes, int flags, struct sockaddr* to, socklen_t addrlen)  
+UDP发送端函数  
+return: 成功时返回传输的字节数 | -1    params: 1、UDP套接字fd 2、保存待传输数据的缓冲地址值 3、待传输数据长度 4、可选项参数，没有则为0 5、目的地址 6、目的地址长度  
+#### ssize_t recvfrom(int sock, void* buff, size_t nbytes, int flags, struct sockaddr* from, socklen_t addrlen)  
+UDP接收端函数  
+return: 成功时返回传输的字节数 | -1    params: 1、UDP套接字fd 2、保存待传输数据的缓冲地址值 3、待传输数据长度 4、可选项参数，没有则为0 5、源地址 6、源地址长度  
 
 
