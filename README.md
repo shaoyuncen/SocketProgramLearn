@@ -56,6 +56,7 @@
 #### struct hostent* gethostbyname(const char* hostname)   
     #通过域名获取IP地址  
     return: hostent结构体地址 | NULL指针    
+    params: IP地址str
     #返回的结构体： 
     struct hostent{  
         ①char* h_name        #官方域名  
