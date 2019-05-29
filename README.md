@@ -7,7 +7,7 @@
 #TCP:  
 #### int socket(int domain, int type, int protocol)    
     #return: fd | -1    
-#params: ①PF_INET | PF_INET6 | etc. ②SOCK_STREAM (tcp) | SOCK_DGRAM (udp)  ③IPPROTO_TCP | IPPROTO_UDP
+    #params: ①PF_INET | PF_INET6 | etc. ②SOCK_STREAM (tcp) | SOCK_DGRAM (udp)  ③IPPROTO_TCP | IPPROTO_UDP
 #### int bind(int sockfd, struct sockaddr *myaddr, socklen_t addrlen)    
 #return: 1 | 0    
 #params: ①fd  ②结构体（地址族和地址信息） ③地址长度
