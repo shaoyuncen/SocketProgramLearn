@@ -24,6 +24,7 @@ int main(int argc, char** argv)
     if(sock == -1)
         error_handling("socket() error");
     
+    //ip & port
     memset(&serv_adr, 0, sizeof(serv_adr));
     serv_adr.sin_family = AF_INET;
     serv_adr.sin_addr.s_addr = inet_addr(argv[1]);
@@ -36,7 +37,7 @@ int main(int argc, char** argv)
 
         if(!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
             break;
-
+        //传输数据
         sendto(sock, message, strlen(message), 0, (struct sockaddr*)&serv_adr, sizeof(serv_adr));
         adr_sz = sizeof(from_adr);
         str_len = recvfrom(sock, message, BUF_SIZE, 0, (struct sockaddr*)&from_adr, &adr_sz);
