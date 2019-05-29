@@ -60,8 +60,9 @@
     return: hostent结构体地址 | NULL指针    
     #返回的结构体： 
     struct hostent{  
-        ①char* h_name官方域名  
-        ②char** h_aliases多个域名列表  
-        ③int h_addrtype IP地址的地址族  
-        ④int h_length IP地址长度  
-        ⑤char** h_addr_list IP地址 };  
+        ①char* h_name        #官方域名  
+        ②char** h_aliases    #多个域名列表  
+        ③int h_addrtype      #IP地址的地址族  
+        ④int h_length        #IP地址长度  
+        ⑤char** h_addr_list  #IP地址 
+    };   
