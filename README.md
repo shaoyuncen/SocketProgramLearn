@@ -3,8 +3,7 @@
 
 # 1、阅读《TCP网络编程》
 ## 接口大全
-
-## TCP:  
+  
 #### int socket(int domain, int type, int protocol)    
     return: fd | -1    
     params: ①PF_INET | PF_INET6 | etc. ②SOCK_STREAM (tcp) | SOCK_DGRAM (udp)  ③IPPROTO_TCP | IPPROTO_UDP
@@ -39,7 +38,6 @@
     return: 指向字符串的指针    
     params: 32位的IPv4地址
 
-## UDP:  
 #### ssize_t sendto(int sock, void* buff, size_t nbytes, int flags, struct sockaddr* to, socklen_t addrlen)  
     #UDP发送端函数  
     return: 成功时返回传输的字节数 | -1    
