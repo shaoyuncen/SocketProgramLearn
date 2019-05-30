@@ -65,3 +65,7 @@
         ④int h_length        #IP地址长度  
         ⑤char** h_addr_list  #IP地址 
     };   
+
+#### struct hostent* gethostbyaddr(const char* addr, socklen_t len, int family)
+    return: hostent地址 | NULL
+    params: ①IP地址 ②IP地址长度(IPv4->4,IPv6->16) ③地址族信息(IPv4->AF_INET,IPv6->AF_INET6)
