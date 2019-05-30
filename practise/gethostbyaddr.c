@@ -4,3 +4,58 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+
+void error_handling(char* message);
+
+int main(int argc, char** argv) 
+{
+    int i;
+    struct hostent *host;
+    struct sockaddr_in addr;
+    if(argc!=2){
+        printf("Usage: %s <IP>\n", argv[0]);
+        exit(1);
+    }
+
+    memset(&addr, 0, sizeof(addr));
+    if(!inet_aton(argv[1], &addr.sin_addr))
+        error_handling("conv str to addr->in_addr error");
+
+
+    
+    if((host = gethostbyaddr((char*)&addr.sin_addr, 4, AF_INET))==NULL)
+    {//如果错误查看最后一个错误码
+        h_errno;
+        printf("error %s\n", argv[1]);
+        switch(h_errno)
+        {
+        case HOST_NOT_FOUND:printf("111\n");break;
+//		case NO_ADDRESS:
+//		case NO_DATA:printf("112\n");break;
+        case NO_RECOVERY:printf("113\n");break;
+        case TRY_AGAIN:printf("115\n");break;
+        }
+        return 1;
+    }
+        
+
+
+    if(!host)
+        error_handling("gethost......error");
+
+    printf("Official name: %s \n", host->h_name);
+    for(i = 0; host->h_aliases[i]; ++i)
+        printf("Aliases %d: %s \n", i+1, host->h_aliases[i]);
+    printf("Address type: %s \n", (host->h_addrtype==AF_INET)?"AF_INET":"AF_INET6");
+    for(i = 0; host->h_addr_list[i]; ++i)
+        printf("IP addr %d: %s \n", i+1, inet_ntoa(*(struct in_addr*)host->h_addr_list[i]));
+
+    return 0;
+}
+
+void error_handling(char* message)
+{
+    fputs(message, stderr);
+    fputc('\n', stderr);
+    exit(1);
+}

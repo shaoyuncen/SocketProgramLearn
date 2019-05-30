@@ -29,6 +29,9 @@
     return: 主机字节   
     params: 网络字节
 
+#### in_addr_t inet_addr(const char* string)
+    return: 32位大端序整数型值 | INADDR_NONE
+    params: str
 #### int inet_aton(const char *string, struct in_addr* addr)    
     #网络地址转换:127.232.124.79(char* | str) -> 0x4f7ce87f(int)  
     return: 1 | 0    
@@ -68,4 +71,4 @@
 
 #### struct hostent* gethostbyaddr(const char* addr, socklen_t len, int family)
     return: hostent地址 | NULL
-    params: ①IP地址 ②IP地址长度(IPv4->4,IPv6->16) ③地址族信息(IPv4->AF_INET,IPv6->AF_INET6)
+    params: ①in_addr结构的IP地址 ②IP地址长度(IPv4->4,IPv6->16) ③地址族信息(IPv4->AF_INET,IPv6->AF_INET6)
