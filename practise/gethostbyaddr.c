@@ -22,7 +22,7 @@ int main(int argc, char** argv)
         error_handling("conv str to addr->in_addr error");
 
 
-    
+    //gethostbyaddr 只有存在反向代理服务时才会返回域名
     if((host = gethostbyaddr((char*)&addr.sin_addr, 4, AF_INET))==NULL)
     {//如果错误查看最后一个错误码
         h_errno;
