@@ -72,3 +72,12 @@
 #### struct hostent* gethostbyaddr(const char* addr, socklen_t len, int family)
     return: hostent地址 | NULL
     params: ①in_addr结构的IP地址 ②IP地址长度(IPv4->4,IPv6->16) ③地址族信息(IPv4->AF_INET,IPv6->AF_INET6)
+
+#### int getsockopt(int sock, int level, int optname, void* optval, socklen_t* optlen)
+    # 查看套接字信息
+    return: 0 | -1
+    params: ①fd ②要查看的可选项的协议层 ③可选项名 ④保存查看结果的缓冲地址值 ⑤向第四个参数传递的缓冲大小
+#### int setsockopt(int sock, int level, int optname, const void* optval, socklen_t optlen)
+    # 设置套接字信息
+    return: 0 | -1
+    params: ①fd ②要更改的可选项的协议层 ③可选项名 ④保存要更改的缓冲地址值 ⑤向第四个参数传递的缓冲大小
