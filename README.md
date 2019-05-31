@@ -80,7 +80,19 @@
 #### int setsockopt(int sock, int level, int optname, const void* optval, socklen_t optlen)
     # 设置套接字信息
     return: 0 | -1
-    params: ①fd ②要更改的可选项的协议层 ③可选项名 ④保存要更改的缓冲地址值 ⑤向第四个参数传递的缓冲大小
+    params: ①fd ②要更改的可选项的协议x可选项名 ④保存要更改的缓冲地址值 ⑤向第四个参数传递的缓冲大小
     第三个参数项部分参数: SO_REUSEADDR -> 将time_wait状态下的socket port重新分配给新的套接字
                        TCP_NODELAY ->  禁用Nagle算法(只有收到ACK后才继续传下一个数据包)默认是关闭的，传输大文件数据时可以考虑关闭
 
+#### 进程相关
+#### pid_t fork(void);  
+    # 复制进程
+    父进程return: 子进程ID | 失败返回-1
+    子进程return: 0 | -1
+
+#### pid_t wait(int* statloc)
+    # 销毁僵尸进程，子进程终止时传递的返回值将保存到statloc所指内存空间，通过下列宏进行分离：
+    # ①WIFEXITED正常终止时返回True ②WEXXITSTATUS返回子进程的返回值
+    # 注意： 调用wait函数时如果没有已终止的子进程，那么程序将会进入阻塞直到有子进程终止
+    return: 成功返回终止的子进程ID | -1
+    params: 用于保存子进程终止时的返回值
