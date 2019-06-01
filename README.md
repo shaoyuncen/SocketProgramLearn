@@ -99,6 +99,7 @@
     params: 用于保存子进程终止时的返回值
 
 #### pid_d waitpid(pid_t pid, int* statloc, int options)
+    # 没有子进程也不阻塞的wait
     return: 成功时返回子进程的ID(或0) | -1
     params: ①等待终止的子进程ID,若为-1则与wait相同等待任意子进程 ②同wait的statloc ③传递头文件sys/wait.h中的常量WNOHANG，即使没有终止的子进程也不会阻塞，而是返回0并退出函数
 
