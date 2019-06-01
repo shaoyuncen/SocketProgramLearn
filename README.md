@@ -97,3 +97,34 @@
     # 注意： 调用wait函数时如果没有已终止的子进程，那么程序将会进入阻塞直到有子进程终止
     return: 成功返回终止的子进程ID | -1
     params: 用于保存子进程终止时的返回值
+
+#### pid_d waitpid(pid_t pid, int* statloc, int options)
+    return: 成功时返回子进程的ID(或0) | -1
+    params: ①等待终止的子进程ID,若为-1则与wait相同等待任意子进程 ②同wait的statloc ③传递头文件sys/wait.h中的常量WNOHANG，即使没有终止的子进程也不会阻塞，而是返回0并退出函数
+
+#### void (*signal(int signo, void (*func)(int)))(int)
+    # 为了在产生信号时调用，返回之前注册的函数指针  #include <signal.h>
+    # 发生第一个参数的情况时，调用第二个参数所指的函数
+    return: 参数类型为int型，返回void型函数指针
+    params: ①第一个参数signo为特殊情况信息 ②第二个参数void (*func)(int)为特殊情况下要调用的函数的指针（回调函数） 
+    signal函数中注册的部分特殊情况和对应的常数: SIGALRM -> 已到通过调用alarm函数注册的时间
+                                          SIGINT -> 输入ctrl+C
+                                          SIGCHLD -> 子进程终止
+    示例：子进程终止则调用mychild函数 -> signal(SIGCHID, mychild)
+         已到通过alarm函数注册的时间 -> signal(SIGALRM, timeout)
+         输入CTRL+C时调用keycontrol函数 -> signal(SIGINT, keycontrol)
+
+#### unsigned int alarm(unsigned int seconds)
+    # 返回0或以秒为单位的距SIGALRM信号发生所剩时间，返回的SIGALRM信号将会唤醒处于阻塞态的进程，并调用Handler.
+    return: unsigned int(秒) | 0
+    params: 传递一个正整型参数，相应时间后将产生SIGALRM信号，若向该函数传递0，则取消之前对SIGALRM信号的预约
+            若预约信号后未指定该信号对应的处理函数，则通过(调用signal函数)终止进程，不做任何处理
+
+#### int sigaction(int signo, const struct sigaction* act, struct sigaction* oldact)
+    return: 0 | -1
+    params: ①与sigal函数相同 ②对应于第一个参数的信号处理器信息 ③通过此参数获取之前注册的信号处理函数指针，不需要则传递0
+    struct sigaction{
+        void (*sa_handler)(int);    # 信号处理函数的地址
+        sigset_t sa_mask;           # 信号相关的选项和特性，均置为0即可
+        int sa_flags;
+    }
