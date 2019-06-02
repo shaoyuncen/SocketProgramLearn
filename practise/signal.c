@@ -31,7 +31,7 @@ void read_childproc(int sig)
     }
 }
 
-//信号处理
+//信号处理消灭僵尸进程
 int main(int argc, char** argv)
 {
     pid_t pid;

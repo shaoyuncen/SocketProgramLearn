@@ -122,6 +122,7 @@
             若预约信号后未指定该信号对应的处理函数，则通过(调用signal函数)终止进程，不做任何处理
 
 #### int sigaction(int signo, const struct sigaction* act, struct sigaction* oldact)
+    # 可用于替换signal,并且更加常用
     return: 0 | -1
     params: ①与sigal函数相同 ②对应于第一个参数的信号处理器信息 ③通过此参数获取之前注册的信号处理函数指针，不需要则传递0
     struct sigaction{
@@ -129,3 +130,11 @@
         sigset_t sa_mask;           # 信号相关的选项和特性，均置为0即可
         int sa_flags;
     }
+
+#### int pipe(int filedes[2])
+    # 管道和套接字一样属于操作系统，所以fork时复制的仅是用于管道I/O的文件描述符
+    return: 0 | -1
+    params: filedes[0]->通过管道接收数据时使用的fd，即管道出口
+            filedes[1]->通过管道发送数据时使用的fd，即管道入口
+
+##
