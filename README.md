@@ -6,7 +6,8 @@
 
 #### 网络相关
 #### int socket(int domain, int type, int protocol)    
-    return: fd | -1    
+    # socket()返回的socketfd指向一个socket对象，该对象不仅记录了本地的ip和port还记录了目的ip和port
+    return: socketfd | -1    
     params: ①PF_INET | PF_INET6 | etc. ②SOCK_STREAM (tcp) | SOCK_DGRAM (udp)  ③IPPROTO_TCP | IPPROTO_UDP
 #### int bind(int sockfd, struct sockaddr *myaddr, socklen_t addrlen)    
     return: 1 | 0    
@@ -83,7 +84,7 @@
     return: 0 | -1
     params: ①fd ②要更改的可选项的协议x可选项名 ④保存要更改的缓冲地址值 ⑤向第四个参数传递的缓冲大小
     第三个参数项部分参数: SO_REUSEADDR -> 将time_wait状态下的socket port重新分配给新的套接字
-                       TCP_NODELAY ->  禁用Nagle算法(只有收到ACK后才继续传下一个数据包)默认是关闭的，传输大文件数据时可以考虑关闭
+                       TCP_NODELAY ->  禁用Nagle算法(只有收到ACK后才继续传下一个数据包),默认情况下Nagle算法是开启的，传输大文件数据时可以考虑关闭，也就是传递该参数。最好当window_size >= MSS，也就是等到缓冲区大小积累到一定程度才会发或者收，否则接收端可以回windows_size(0)或者发送端延时发送
 
 #### 进程相关
 #### pid_t fork(void);  
@@ -139,12 +140,13 @@
 
 #### I/O复用技术
 #### int select(int maxfd, fd_set* readset, fd_set* writeset,fd_set* exceptset, const struct timeval* timeout)
+    # 将原来为1的所有位置为0，发生变化的fd对应位除外，调用后，仍为1的位置上的fd发生了变化
     # 使用fd_set数组(类似于bitmap)来统一存放fd，通过下列宏来注册或更改fd的值：
         FD_ZERO(fd_set* fdset)              #将fd_set变量所有初始化为0 (初始化)
         FD_SET(int fd, fd_set* fdset)       #在fdset指向的变量中注册fd (增)
         FD_CLR(int fd, fd_set* fdset)       #从参数fdset指向的变量中清除fd (删)
         FD_ISSET(int fd, fd_set* fdset)     #若参数fdset指向的变量中包含fd，返回True (查)
-    return: 大于0的值 | -1
+    return: 大于0的值，说明相应数量的fd发生变化 | -1
     params: ①监视的fd数量 
             ②将所有关注“是否存在待读取数据”的fd注册到fd_set，并传递地址值
             ③将所有关注”是否可传输无阻塞数据“的fd注册到fd_set，并传递地址值
@@ -157,3 +159,5 @@
               };
 
     
+## 相关博客
+#### TCP详解: https://coolshell.cn/articles/11609.html
