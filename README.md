@@ -138,5 +138,4 @@
             filedes[1]->通过管道发送数据时使用的fd，即管道入口
 
 #### I/O复用技术
-#### int select(int maxfd, fd_set* readset, fd_set* writeset, \
-                fd_set* exceptset, const struct timeval* timeout)
+#### int select(int maxfd, fd_set* readset, fd_set* writeset,fd_set* exceptset, const struct timeval* timeout)
