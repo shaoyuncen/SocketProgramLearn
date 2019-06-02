@@ -150,6 +150,7 @@
             ③将所有关注”是否可传输无阻塞数据“的fd注册到fd_set，并传递地址值
             ④将所有关注”是否发生异常“的fd注册到fd_set，并传递地址值
             ⑤调用select函数后，为防止陷入无限阻塞的状态，传递time-out信息
+              返回0，则超时，如果不想设置超时，可传递NULL
               struct timeval{
                   long tv_sec; #seconds
                   long tv_usec;#microseconds
