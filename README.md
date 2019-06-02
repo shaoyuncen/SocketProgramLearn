@@ -139,3 +139,20 @@
 
 #### I/O复用技术
 #### int select(int maxfd, fd_set* readset, fd_set* writeset,fd_set* exceptset, const struct timeval* timeout)
+    # 使用fd_set数组(类似于bitmap)来统一存放fd，通过下列宏来注册或更改fd的值：
+        FD_ZERO(fd_set* fdset)              #将fd_set变量所有初始化为0 (初始化)
+        FD_SET(int fd, fd_set* fdset)       #在fdset指向的变量中注册fd (增)
+        FD_CLR(int fd, fd_set* fdset)       #从参数fdset指向的变量中清除fd (删)
+        FD_ISSET(int fd, fd_set* fdset)     #若参数fdset指向的变量中包含fd，返回True (查)
+    return: 大于0的值 | -1
+    params: ①监视的fd数量 
+            ②将所有关注“是否存在待读取数据”的fd注册到fd_set，并传递地址值
+            ③将所有关注”是否可传输无阻塞数据“的fd注册到fd_set，并传递地址值
+            ④将所有关注”是否发生异常“的fd注册到fd_set，并传递地址值
+            ⑤调用select函数后，为防止陷入无限阻塞的状态，传递time-out信息
+              struct timeval{
+                  long tv_sec; #seconds
+                  long tv_usec;#microseconds
+              };
+
+    
