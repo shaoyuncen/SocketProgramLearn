@@ -61,7 +61,7 @@ int main(int argc, char const *argv[])
                 {
                     adr_sz = sizeof(clnt_adr);
                     clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_adr, &adr_sz);
-                    FD_SET(clnt_sock, &reads);
+                    FD_SET(clnt_sock, &reads); //将客户端socket注册进fd_set
                     if(fd_max < clnt_sock)
                         fd_max = clnt_sock;
                     printf("connected cliend: %d \n", clnt_sock);
@@ -69,15 +69,15 @@ int main(int argc, char const *argv[])
                 else//read message 有待读取的数据
                 {
                     str_len = read(i, buf, BUF_SIZE);
-                    if(str_len == 0)//close request
+                    if(str_len == 0)//close request 关闭连接
                     {
-                        FD_CLR(i, &reads);
-                        close(i);
+                        FD_CLR(i, &reads); //从fd_set中清除掉这个fd
+                        close(i); //关闭fd
                         printf("closed client: %d \n", i);
                     }
                     else
                     {
-                        write(i, buf, str_len);//echo!
+                        write(i, buf, str_len);//echo! 把收到的数据发送回去
                     }
                 }
             }
