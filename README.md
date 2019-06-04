@@ -157,7 +157,35 @@
                   long tv_sec; #seconds
                   long tv_usec;#microseconds
               };
-
+#### int epoll_create(int size)
+    # 创建保存epoll文件描述符的空间，epoll创建的文件描述符保存空间称为epoll例程
+    return: 成功时返回epoll文件描述符 | -1
+    params: epoll实例的大小
+#### int epoll_ctl(int epfd, int op, int fd, struct epoll_event* event)
+    return: 0 | -1
+    params: ①用于注册监视对象的epoll例程的文件描述符 ②用于指定监视对象的添加、删除、更改 ③需要注册的监视对象文件描述符 ④监视对象的事件类型(epoll_event结构体指针)
+    例：epoll_ctl(A, EPOLL_CTL_ADD, B, C)    #添加B到epoll例程A中，监视C参数的事件
+       epoll_ctl(A, EPOLL_CTL_DEL, B, NULL) #将epoll例程A中的文件描述符B删除
+       epoll_ctl(A, EPOLL_CTL_MOD，B, C)    #将epoll例程A中的文件描述符B更改
+    struct epoll_event{
+        __unit32_t events; 
+        epoll_data_t data;
+    }
+    成员说明：
+    events: EPOLLIN:需要读取数据的情况
+            EPOLLOUT:输出缓冲为空，可以立即发送数据
+            EPOLLPRI:收到OOB数据(紧急通知)
+            EPOLLRDHUP:断开连接或半关闭的情况，在边缘触发情况下很有用
+            EPOLLERR:发送错误的情况
+            EPOLLET:以边缘触发的方式得到事件通知
+            EPOLLONESHOT:发生一次事件后，相应的文件描述符不再收到事件通知，因此需要向epoll_ctl的第二个参数传递更改参数
+    typedef union epoll_data{
+        void* ptr;
+        int fd;
+        __uint32_t u32;
+        __uint64_t u64;
+    }epoll_data_t;
+    
 #### I/O
 #### ssize_t send(int sockfd, const void* buf, size_t nbytes, int flags)
     return: 成功返回发送的字节数 | -1
@@ -194,5 +222,12 @@
 #### int fileno(FILE* stream)
     # 将FILE结构体指针转为文件描述法fd
     return: 成功后返回转换的fd | -1
+
+#### int dup(int fildes)
+#### int dup2(int fildes, int fildes2)
+    # 复制文件描述符
+    return: 成功时返回复制的fd | -1
+    params: ①需要复制的fd ②明确指定的fd整数值
+
 ## 相关博客
 #### TCP详解: https://coolshell.cn/articles/11609.html
