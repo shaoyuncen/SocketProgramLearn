@@ -35,9 +35,7 @@ int main(int argc, char** argv)
     act.sa_flags = 0;
 
     acpt_sock = socket(PF_INET, SOCK_STREAM, 0);
-    if(acpt_sock == -1)//监听的socket
-        error_handling("socket() error");
-    
+
     memset(&recv_adr, 0, sizeof(recv_adr));
     recv_adr.sin_family = AF_INET;
     recv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
@@ -52,21 +50,34 @@ int main(int argc, char** argv)
     serv_adr_sz = sizeof(serv_adr);
     
     recv_sock = accept(acpt_sock, (struct sockaddr*)&serv_adr, &serv_adr_sz);//接收数据的socketfd
-    //文件描述符recv_sock指向的套接字 引发的SIGURG信号处理进程 变为 将getpid()函数返回值用作ID的进程
-    fcntl(recv_sock, F_SETOWN, getpid()); //把fd recv_sock的拥有者改为getpid()函数返回的进程
-    state = sigaction(SIGURG, &act, 0); //有紧急信号则调用act中的handler
+    // //文件描述符recv_sock指向的套接字 引发的SIGURG信号处理进程 变为 将getpid()函数返回值用作ID的进程
+    // fcntl(recv_sock, F_SETOWN, getpid()); //把fd recv_sock的拥有者改为getpid()函数返回的进程
+    // state = sigaction(SIGURG, &act, 0); //有紧急信号则调用act中的handler
+    // printf("%d \n", state);
+    // while((str_len=recv(recv_sock, buf, sizeof(buf), 0))!=0)
+    // {
+    //     if(str_len == -1)//没收到数据
+    //         continue;
+    //     buf[str_len] = 0;//给接收的字符后面添加一个\0
+    //     puts(buf);
+    // }
 
-    while((str_len=recv(recv_sock, buf, sizeof(buf), 0))!=0)
+    //MSG_PEEK | MSG_DONTWAIT
+    while(1)
     {
-        if(str_len == -1)//没收到数据
-            continue;
-        buf[str_len] = 0;//给接收的字符后面添加一个\0
-        puts(buf);
+        str_len = recv(recv_sock, buf, sizeof(buf)-1, MSG_PEEK | MSG_DONTWAIT);
+        if(str_len>0)
+            break;
     }
+    buf[str_len] = 0;
+    printf("Buffer %d bytes: %s \n", str_len, buf);
+    str_len = recv(recv_sock, buf, sizeof(buf)-1, 0);
+    buf[str_len] = 0;
+    printf("buf again: %s \n", buf);
 
 
-    close(recv_sock);
     close(acpt_sock);
+    close(recv_sock);
 
     return 0;
 }

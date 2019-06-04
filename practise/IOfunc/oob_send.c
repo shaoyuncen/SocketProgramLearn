@@ -32,9 +32,9 @@ int main(int argc, char** argv)
     else
         puts("Connecting.........");
     
-    write(sock, "123", sizeof("123"));
+    // write(sock, "123", sizeof("123"));
     send(sock, "45", sizeof("45"), MSG_OOB);//紧急
-    write(sock, "567", sizeof("567"));
+    // write(sock, "567", sizeof("567"));
     send(sock, "890", sizeof("890"), MSG_OOB);//紧急
 
 
