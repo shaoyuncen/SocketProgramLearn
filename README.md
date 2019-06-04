@@ -158,6 +158,20 @@
                   long tv_usec;#microseconds
               };
 
+#### I/O
+#### ssize_t send(int sockfd, const void* buf, size_t nbytes, int flags)
+    return: 成功返回发送的字节数 | -1
+    params: ①表示与数据传输对象的连接的套接字fd ②保存待传输数据的缓冲地址 ③待传输字节数 ④传输数据时指定的可选项信息 
+
+#### ssize_t recv(int sockfd, const void* buf, size_t nbytes, int flags)
+    return: 成功时返回接收的字节数(EOF时返回0) | -1
+    params: ①表示数据接收对象的套接字fd ②保存接收数据的缓冲地址 ③可接收的最大字节书 ④接收数据时指定的可选项信息
+    # 最后一个参数可选项可利用位或(bitOR)运算传递多个信息：
+      MSG_OOB: 传输带外数据（发送紧急消息
+      MSG_PEEK:验证输入缓冲中是否存在接收的数据
+      MSG_DONTROUTE:数据传输过程中不参照路由表，在本地网络中寻找目的地
+      MSG_DONTWAIT:调用I/O时不阻塞，用于非阻塞式I/O
+      MSG_WAITALL:防止函数返回，直到接收全部请求的字节数
     
 ## 相关博客
 #### TCP详解: https://coolshell.cn/articles/11609.html
