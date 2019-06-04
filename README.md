@@ -173,5 +173,26 @@
       MSG_DONTWAIT:调用I/O时不阻塞，用于非阻塞式I/O
       MSG_WAITALL:防止函数返回，直到接收全部请求的字节数
     
+#### ssize_t writev(int filedes, const struct iovec* iov, int iovcnt)
+    # 可以将分散保存在多个缓冲区的数据一并发送
+    return: 成功返回发送的字节数 | -1
+    params: ①表示数据传输对象的套接字fd ②iovec结构体数组的地址，包含待发送数据的位置和大小 ③向第二个参数传递的数组长度
+    struct iovec{
+        void* iov_base; # 缓冲地址
+        size_t iov_len; # 缓冲大小
+    }
+
+#### ssize_t readv(int filedes, const struct iovec* iov, int iovcnt)
+    return: 成功返回发送的字节数 | -1
+    params: ①表示接收数据的套接字fd ②数据保存位置和大小信息的iovec结构体数组的地址值 ③向第二个参数传递的数组长度
+
+#### 标准I/O函数(带缓冲)
+#### FILE* fdopen(int fildes, const char* mode)
+    # 将套接字fd转换为标准I/O中的FILE结构体指针
+    return: 成功时返回转换的FILE结构体指针 | NULL
+    params: ①需要转换的文件描述符fd ②将要创建的FILE结构体指针的模式(mode)
+#### int fileno(FILE* stream)
+    # 将FILE结构体指针转为文件描述法fd
+    return: 成功后返回转换的fd | -1
 ## 相关博客
 #### TCP详解: https://coolshell.cn/articles/11609.html

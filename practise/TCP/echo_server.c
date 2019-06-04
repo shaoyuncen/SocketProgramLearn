@@ -37,6 +37,11 @@ int main(int argc, char** argv)
     
     clnt_adr_sz = sizeof(clnt_adr);
     
+    /*使用标准I/O*/
+        FILE* readfp;
+        FILE* writefp;
+
+    /**/
     for(int i = 0; i < 5; ++i)
     {
         clnt_sock = accept(serv_sock, (struct sockaddr*)&clnt_adr, &clnt_adr_sz);
@@ -45,10 +50,21 @@ int main(int argc, char** argv)
         else
             printf("Connected client %d \n", i+1);
         
-        while((str_len = read(clnt_sock, message, BUF_SIZE)) != 0)
-            write(clnt_sock, message, str_len);
-        
-        close(clnt_sock);
+        readfp = fdopen(clnt,_sock "r");
+        writefp = fdopen(clnt_sock, "w");
+        while(!feof(readfp))
+        {
+            fgets(message, BUF_SIZE, readfp);
+            fputs(message, writefp);
+            fflush(writefp);//立即发送
+        }
+        fclose(readfp);
+        fcloes(writefp);
+
+        ////未使用标准I/O
+        // while((str_len = read(clnt_sock, message, BUF_SIZE)) != 0)
+        //     write(clnt_sock, message, str_len);        
+        // close(clnt_sock);
     }
 
     close(serv_sock);

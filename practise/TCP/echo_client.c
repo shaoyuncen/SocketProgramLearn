@@ -34,6 +34,10 @@ int main(int argc, char** argv)
     else
         puts("Connecting.........");
     
+
+    //标准I/O
+    FILE readfp = fdopen(sock, "r");
+    FILE writefp = fdopen(sock, "w");
     while(1)
     {
         fputs("Input message(Q to quit): ",stdout);
@@ -42,24 +46,28 @@ int main(int argc, char** argv)
         if(!strcmp(message, "q\n") || !strcmp(message, "Q\n"))
             break;
 
-        str_len = write(sock, message, strlen(message));
+        fputs(message, writefp);
+        fflush(writefp);
+        fgets(message, BUF_SIZE, readfp);
+
+        // str_len = write(sock, message, strlen(message));
 
         //只接收发送的长度的字符串
-        recv_len = 0;
-        while(recv_len < str_len)//循环调用read保证收到的长度应该和发送的相同
-        {
-            recv_cnt = read(sock, &message[recv_len], BUF_SIZE-1);
-            if(recv_cnt == -1)
-                error_handling("read() error");
-            recv_len += recv_cnt;
-        }
-        
-       
-        message[recv_len] = 0;
+        // recv_len = 0;
+        // while(recv_len < str_len)//循环调用read保证收到的长度应该和发送的相同
+        // {
+        //     recv_cnt = read(sock, &message[recv_len], BUF_SIZE-1);
+        //     if(recv_cnt == -1)
+        //         error_handling("read() error");
+        //     recv_len += recv_cnt;
+        // }
+        // message[recv_len] = 0;
         printf("Message from server: %s", message);
     }
 
-    close(sock);
+    fclose(readfp);
+    fclose(writefp);
+    // close(sock);
 
     return 0;
 }
