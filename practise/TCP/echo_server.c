@@ -50,7 +50,7 @@ int main(int argc, char** argv)
         else
             printf("Connected client %d \n", i+1);
         
-        readfp = fdopen(clnt,_sock "r");
+        readfp = fdopen(clnt_sock, "r");
         writefp = fdopen(clnt_sock, "w");
         while(!feof(readfp))
         {
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
             fflush(writefp);//立即发送
         }
         fclose(readfp);
-        fcloes(writefp);
+        fclose(writefp);
 
         ////未使用标准I/O
         // while((str_len = read(clnt_sock, message, BUF_SIZE)) != 0)

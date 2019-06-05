@@ -36,8 +36,8 @@ int main(int argc, char** argv)
     
 
     //标准I/O
-    FILE readfp = fdopen(sock, "r");
-    FILE writefp = fdopen(sock, "w");
+    FILE* readfp = fdopen(sock, "r");
+    FILE* writefp = fdopen(sock, "w");
     while(1)
     {
         fputs("Input message(Q to quit): ",stdout);

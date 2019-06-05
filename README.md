@@ -185,7 +185,20 @@
         __uint32_t u32;
         __uint64_t u64;
     }epoll_data_t;
-    
+#### int epoll_wait(int epfd, struct epoll_event* events, int maxevents, int timeout)
+    # epoll最后调用的函数，等待文件描述符发生变化，发生变化后在第二个参数指向的缓冲中保存发生事件的文件描述符集合
+    return: 成功时返回发生事件的文件描述符数 | -1
+    params: ①表示事件发生监视范围的epoll例程的fd ②保存发生事件的文件描述符集合的结构体地址 ③第二个参数中可以保存的最大事件数 ④以1/1000秒为单位的等待事件，传递-1时一直等到发生事件
+    注意：
+    epoll默认是条件触发，即缓冲区每次发生变化都会通知该事件(注册到发生变化的文件描述符)
+    切换为边缘触发方式可更改events中的参数EPOLLET通过epoll_ctl注册到epoll例程中,如果时边缘触发方式需要将read&write更改为非阻塞式，防止服务器长时间停顿
+#### int fcntl(int filedes, int cmd, ...)
+    # 用于将套接字改成非阻塞模式
+    return: 成功时返回cmd参数相关值 | -1
+    params: ①属性更改目标的文件描述符 ②函数调用的目的
+    例：
+        int flag = fcntl(fd, F_GETFL, 0);//获取之前设置的属性信息
+        fcntl(fd, F_SETFL, flag|O_NONBLOCK);
 #### I/O
 #### ssize_t send(int sockfd, const void* buf, size_t nbytes, int flags)
     return: 成功返回发送的字节数 | -1
